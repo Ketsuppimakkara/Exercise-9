@@ -6,7 +6,7 @@ var users = require('../models/Users');
 var router = express.Router();
 
 
-/* POST login page.*/
+/* POST login page. Login gets compared to encrypted hash in database. Generates a JWT token on successful login*/
 router.post('/', (req, res, next) => {
     users.findOne({email: req.body.email},(err, user) =>{
         if(err){

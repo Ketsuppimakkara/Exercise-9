@@ -6,10 +6,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
+var privateRouter = require('./routes/private');
+var todoRouter = require('./routes/todos');
 
 
 var app = express();
@@ -37,6 +40,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/user/register', registerRouter);
 app.use('/api/user/login', loginRouter);
+app.use('/api/private', privateRouter);
+app.use('/api/todos', todoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

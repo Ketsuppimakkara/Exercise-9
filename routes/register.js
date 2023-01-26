@@ -3,10 +3,16 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 var users = require('../models/Users');
 var router = express.Router();
+const { body, validationResult } = require('express-validator');
+
 
 /* POST register page. Request has email and password attributes. Tries to find email with same name from database, if no match is found, salts and encrypts password and saves new user object to  database.*/
-router.post('/', (req, res, next) => {
+router.post('/',body('email').isEmail(),body('password').isStrongPassword({minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1}), (req, res, next) => {
     users.findOne({email: req.body.email},(err, user) =>{
+        const validationErrors = validationResult(req);
+        if(!validationErrors.isEmpty()){
+            return res.status(400).json({errors: validationErrors.array()});
+        }
         if(err){
             console.log("error in database search");
             return res.send("error in database search");

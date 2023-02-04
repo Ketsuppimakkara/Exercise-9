@@ -10,7 +10,9 @@ var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
+var registerPageRouter = require('./routes/registerpage');
 var loginRouter = require('./routes/login');
+var loginPageRouter = require('./routes/loginpage');
 var privateRouter = require('./routes/private');
 var todoRouter = require('./routes/todos');
 
@@ -39,7 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/user/register', registerRouter);
+app.use('/register.html',registerPageRouter);
 app.use('/api/user/login', loginRouter);
+app.use('/login.html',loginPageRouter);
 app.use('/api/private', privateRouter);
 app.use('/api/todos', todoRouter);
 

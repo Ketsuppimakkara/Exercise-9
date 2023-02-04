@@ -11,25 +11,23 @@ router.post('/', (req, res, next) => {
     users.findOne({email: req.body.email},(err, user) =>{
         if(err){
             console.log("error in database search");
-            return res.send("error in database search");
+            return res.send('{"error":"error in database search"}');
         }
         if(!user){
-            return res.send("No such user found!");
+            return res.status(403).json({Errors:[{msg:"Invalid credentials"}]})
             }
         else{
-
             bcrypt.compare(req.body.password, user.password, (err, isMatch) =>{
                 if(err) throw err;
                 else{
                     if(!isMatch){
-                        res.send("Login failed");
+                        res.status(403).json({Errors:[{msg:"Invalid credentials"}]})
                     }
                     else{                            
                         const jwtPayload = {
                         id: user.id,
                         email: user.email,
                         };
-                    console.log(jwtPayload);
                     jwt.sign(
                             jwtPayload,
                             process.env.SECRET,
@@ -39,8 +37,7 @@ router.post('/', (req, res, next) => {
                             (err,token)=>{
                                 if(err) throw err;
                                 else{
-                                    res.json({success:true,
-                                        token})
+                                    res.json({success:true,token:token})
                                 }
                             }
                         );

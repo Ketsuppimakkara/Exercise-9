@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= "Login page"
+  form(action="",id='login-form',method='POST') 
+    label(for="email")
+      b Email
+    input(type="email",id="email", name="email",placeholder="Enter Email")
+    label(for="password") 
+      b Password
+    input(type="password",id="password", name="password",placeholder="Enter Password")
+    input(type="submit",name='register', value="Login")
+  p#error 
+
+  script(src="/javascripts/login.js") 
